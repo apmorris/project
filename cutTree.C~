@@ -14,7 +14,7 @@ void cutTree(){
     // -- and also the name of the output file
     
     const std::string filename = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/Lb2JpsipK_2011_2012_signal_withbdt.root";
-    const std::string outFilename("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/Lb2JpsipK_2011_2012_signal_withbdt_cut_00.root");
+    const std::string outFilename("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/Lb2JpsipK_2011_2012_signal_withbdt_cut_02.root");
         
     const std::string treename("withbdt");
  
@@ -39,7 +39,7 @@ void cutTree(){
 // BDT cuts ------------------------------------------------------------------------- 
     
     //const std::string cuts = "bdtg>=0.8";
-    const std::string cuts = "bdtg3>=0.0";
+    const std::string cuts = "bdtg3>=0.2";
     
 // Copy the tree --------------------------------------------------------------------
     
