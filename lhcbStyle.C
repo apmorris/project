@@ -1,6 +1,6 @@
 // all users - please change the name of this file to lhcbStyle.C
 // Commits to lhcbdocs svn of .C files are not allowed
-void lhcbStyle(){
+void lhcbStyle() {
 
   // define names for colours
   Int_t black  = 1;

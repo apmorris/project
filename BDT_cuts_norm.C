@@ -22,8 +22,8 @@ with errors versus bdt cut value. This outside the loop.
 void BDT_cuts_norm(){
     
     
-    gROOT->ProcessLine(".L ~/cern/scripts/lhcbStyle.C");
-    //lhcbStyle();
+    gROOT->ProcessLine(".L ~/cern/project/lhcbStyle.C");
+    lhcbStyle();
     
     const std::string filename("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/Lb2JpsipK_2011_2012_signal_withbdt.root");
     const std::string treename = "withbdt";
@@ -62,8 +62,8 @@ void BDT_cuts_norm(){
     RooCBShape cb2("cb2","cb2", Lambda_b0_DTF_MASS_constr1, mean, sigma2, alpha2, n2); 
     RooAddPdf sig("sig", "sig", RooArgList(cb1, cb2), RooArgList( frac2 ));
     RooRealVar cbRatio("cbRatio","cb Ratio", 0.8, 0.1, 1.0);
-    RooRealVar sigYield("sigYield","sig Yield", 4e2, 1e1, 1e4);
-    RooRealVar bgYield("bgYield","bg Yield", 1e4, 1e1, 1e5);
+    RooRealVar sigYield("sigYield","sig Yield", 4e2, 1e0, 1e6);
+    RooRealVar bgYield("bgYield","bg Yield", 1e4, 1e0, 1e6);
     
     
     
@@ -132,14 +132,14 @@ void BDT_cuts_norm(){
         const std::string cut = c.str();
         
         //std::cout << cut;
-    /*
+    
         RooArgSet obs;
         obs.add(Lambda_b0_DTF_MASS_constr1);
         //obs.add(chi_c_Mp);
         //obs.add(mass_pK);
         obs.add(Jpsi_M);
         obs.add(chi_c_M);
-        obs.add(bdtg); 
+        obs.add(bdtg3); 
     
         RooDataSet ds("ds","ds", obs, RooFit::Import(*tree), RooFit::Cut(cut.c_str())); 
     
@@ -159,19 +159,19 @@ void BDT_cuts_norm(){
         
         double efficiency1_error = sqrt(efficiency1_error_sq);
         efficiencies1_error[i] = efficiency1_error;
-        */
         
+        /*
         double MC_post = treeMC->GetEntries(cut.c_str());
         
         double eff_val = MC_post/MC_pre; 
         
         //something here to get the sideband background count
-         
-        /*
+        
+        
         Lambda_b0_DTF_MASS_constr1.setRange("R", 5650., 5700.);
         RooFitResult * sideband = bg.fitTo( ds, RooFit::Range("R") );
         sideband->Print();
-        */
+        
         Lambda_b0_DTF_MASS_constr1.setRange("R", 5650., 5700.);
         RooAbsReal* integral = pdf.createIntegral(Lambda_b0_DTF_MASS_constr1, RooFit::Range("R"));
         //std::cout << integral->getVal() << std::endl;
@@ -185,7 +185,7 @@ void BDT_cuts_norm(){
         
         double integ = tree->GetEntries(cut2.c_str());
         //double integ = integral->getVal();
-
+        
         double efficiency2 = eff_val/(5./2. + sqrt(integ));
         efficiencies2[i] = efficiency2;
         
@@ -195,7 +195,7 @@ void BDT_cuts_norm(){
         std::cout << "\n" << integ << std::endl;
         std::cout << "\n" << eff_val << std::endl;
         std::cout << "\n" << efficiency2 << std::endl;
-        
+        */
         
         //double efficiency2_error = efficiency2*sqrt(pow(eff_error/eff_val,2)+(1/(4*sideband_bg_val))*pow(sideband_bg_error/(5/2+sideband_bg_val),2));
         
@@ -206,9 +206,9 @@ void BDT_cuts_norm(){
         
         //ds.plotOn( plot );
         //pdf.plotOn( plot );
-    
+        
         //RooPlot* plotPullMass = mass.frame();
-    
+        
         //plotPullMass->addPlotable( plot->pullHist() );
         //plotPullMass->SetMinimum();
         //plotPullMass->SetMaximum();
@@ -217,27 +217,29 @@ void BDT_cuts_norm(){
     }
     
     
-    //TCanvas *c1 = new TCanvas(); 
+    TCanvas *c1 = new TCanvas(); 
     
     //double zeros[20];
     //for (i=0, i<20, i++) zeros[i]=0.0;
     
-    //TGraphErrors* graph = new TGraphErrors(40, bdt_cuts, efficiencies1, 0, efficiencies1_error);
+    TGraphErrors* graph = new TGraphErrors(40, bdt_cuts, efficiencies1, 0, efficiencies1_error);
     
-    //graph->SetTitle("S/sqrt(S+B) vs BDTG cut");
-    //graph->SetMarkerColor(4);
-    //graph->SetMarkerStyle(20);
-    //graph->SetMarkerSize(1.0);
-    //graph->GetXaxis()->SetTitle("BDTG cut (>)");
-    //graph->GetXaxis()->SetRangeUser(-1.0,1.0);
-    //graph->GetYaxis()->SetTitle("S/sqrt(S+B)");
+    graph->SetTitle("S/sqrt(S+B) vs BDTG3 cut");
+    graph->SetMarkerColor(4);
+    graph->SetMarkerStyle(20);
+    graph->SetMarkerSize(1.0);
+    graph->GetXaxis()->SetTitle("BDTG3 cut (>)");
+    graph->GetXaxis()->SetRangeUser(-1.0,1.0);
+    graph->GetYaxis()->SetTitle("S/sqrt(S+B)");
     //graph->Fit("pol5"); 
-    //graph->Draw("AP");
-    //c1->SaveAs("~/cern/plots/bdt_cuts/Lb2chicpK_2011_2012_BDTG_cuts_S_sqrtS+B.png");
+    graph->Draw("AP");
+    c1->SaveAs("~/cern/plots/bdt_cuts_norm/Lb2JpsipK_2011_2012_BDTG3_cuts_S_sqrtS+B.pdf");
     //return c1;
     
+    //std::cout << efficiencies1_error[5] << std::endl;
+    
     //gStyle->SetOptFit(1011);
-    TCanvas *c2 = new TCanvas();
+    /*TCanvas *c2 = new TCanvas();
     
     TGraph* graph2 = new TGraph(40, bdt_cuts, efficiencies2);
     
@@ -252,7 +254,7 @@ void BDT_cuts_norm(){
     graph2->Draw("AP");
     c2->SaveAs("~/cern/plots/bdt_cuts_norm/Lb2JpsipK_2011_2012_BDTG3_cuts_Punzi.png");
     //return c2;
-    
+    */
     
     
     
