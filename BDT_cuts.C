@@ -22,13 +22,13 @@ with errors versus bdt cut value. This outside the loop.
 void BDT_cuts(){
     
     
-    gROOT->ProcessLine(".L ~/cern/scripts/lhcbStyle.C");
-    //lhcbStyle();
+    gROOT->ProcessLine(".L ~/cern/project/lhcbStyle.C");
+    lhcbStyle();
     
-    const std::string filename("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/Lb2chicpK_2011_2012_signal_withbdt.root");                //
+    const std::string filename("/afs/cern.ch/work/a/apmorris/public/Lb2chicpK/signal_samples/Lb2chicpK_2011_2012_signal_withbdt.root");                //
     const std::string treename = "withbdt";
     
-    const std::string filenameMC("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/Lb2chicpK_MC_2011_2012_signal_withbdt.root");             //
+    const std::string filenameMC("/afs/cern.ch/work/a/apmorris/public/Lb2chicpK/signal_samples/Lb2chicpK_MC_2011_2012_signal_withbdt.root");             //
     
     TFile* file = TFile::Open( filename.c_str() );
     if( !file ) std::cout << "file " << filename << " does not exist" << std::endl;
@@ -42,7 +42,7 @@ void BDT_cuts(){
     
     
     // -- signal, mass shape
-    RooRealVar Lambda_b0_DTF_MASS_constr1("Lambda_b0_DTF_MASS_constr1","m(#chi_{c}pK^{-})", 5550., 5700., "MeV/c^{2}"); 
+    RooRealVar Lambda_b0_DTF_MASS_constr1("Lambda_b0_DTF_MASS_constr1","m(#chi_{c1}pK^{-})", 5500., 5700., "MeV/c^{2}"); 
     RooRealVar Jpsi_M("Jpsi_M","m(#mu#mu)", 3000., 3200., "MeV/c^{2}"); 
     RooRealVar chi_c_M("chi_c_M","m(J/#psi#gamma)", 3400., 3700., "MeV/c^{2}"); 
     RooRealVar mean("mean","mean", 5630., 5610., 5650.);
@@ -68,25 +68,25 @@ void BDT_cuts(){
     /*
     EXT PARAMETER                                INTERNAL      INTERNAL
   NO.   NAME      VALUE            ERROR       STEP SIZE       VALUE
-   1  alpha1       2.50957e+00   5.68360e-02   2.65700e-03  -1.07061e-01
-   2  alpha2      -2.28664e+00   5.52765e-02   3.09340e-03  -6.11388e+00
-   3  frac2        6.51083e-01   2.02553e-02   3.33095e-03   3.06964e-01
-   4  mean         5.61967e+03   1.61655e-02   2.24983e-04  -1.02914e-01
-   5  n1           1.18728e+00   8.03720e-02   2.61213e-03  -1.04832e+00
-   6  n2           1.97964e+00   1.78120e-01   7.39156e-03  -6.90351e-01
-   7  sigma1       3.88071e+00   4.77592e-02   4.00488e-04  -1.22796e+00
-   8  sigma2       7.03034e+00   1.36260e-01   1.79652e-04  -1.41525e+00
+   1  alpha1       2.48274e+00   6.66447e-02   9.45814e-05  -1.19062e-01
+   2  alpha2      -2.28024e+00   6.03164e-02   1.24234e-04   1.71663e-01
+   3  frac2        6.50422e-01   2.32597e-02   1.33723e-04   3.05577e-01
+   4  mean         5.61968e+03   1.63051e-02   4.51270e-05  -1.02864e-01
+   5  n1           1.23132e+00   7.65035e-02   8.01913e-05  -1.03651e+00
+   6  n2           1.99690e+00   1.99241e-01   2.96594e-04  -6.85790e-01
+   7  sigma1       3.87937e+00   5.27918e-02   1.61188e-05  -1.22804e+00
+   8  sigma2       7.01118e+00   1.65098e-01   2.35653e-05  -1.07284e+00
     */
     
     //put in values from fit_MC here                                                //
                                                                                     //
-    alpha1.setVal( 2.50957e+00 );                                                   //
-    alpha2.setVal( -2.28664e+00 );                                                 //
-    n1.setVal( 1.18728e+00 );                                                       //
-    n2.setVal( 1.97964e+00 );                                                       //
-    frac2.setVal( 6.51083e-01 );                                                    //
-    sigma1.setVal( 3.88071e+00 );                                                   //
-    sigma2.setVal( 7.03034e+00 );                                                   //
+    alpha1.setVal( 2.48274e+00 );                                                   //
+    alpha2.setVal( -2.28024e+00 );                                                 //
+    n1.setVal( 1.23132e+00 );                                                       //
+    n2.setVal( 1.99690e+00 );                                                       //
+    frac2.setVal( 6.50422e-01 );                                                    //
+    sigma1.setVal( 3.87937e+00 );                                                   //
+    sigma2.setVal( 7.01118e+00 );                                                   //
     
     alpha1.setConstant( true );
     alpha2.setConstant( true );
@@ -148,6 +148,7 @@ void BDT_cuts(){
         double MC_post = treeMC->GetEntries(cut.c_str());
 
         double eff_val = MC_post/MC_pre;
+        double eff_error = sqrt(eff_val*(1-eff_val)/MC_pre);
 
         double efficiency2 = eff_val/(5./2. + sqrt(integ));
         efficiencies2[i] = efficiency2;
@@ -155,14 +156,14 @@ void BDT_cuts(){
         effvals[i]=eff_val;
         
         
+        
+        
+        double efficiency2_error = efficiency2*sqrt(pow(eff_error/eff_val,2));
+        efficiencies2_error[i] = efficiency2_error;
+        
         std::cout << "\n" << integ << std::endl;
         std::cout << "\n" << eff_val << std::endl;
-        std::cout << "\n" << efficiency2 << std::endl;
-        
-        
-        //double efficiency2_error = efficiency2*sqrt(pow(eff_error/eff_val,2)+(1/(4*sideband_bg_val))*pow(sideband_bg_error/(5/2+sideband_bg_val),2));
-        
-        
+        std::cout << "\n" << efficiency2_error << std::endl;
     }
     
     
@@ -174,15 +175,16 @@ void BDT_cuts(){
     TGraph* graph2 = new TGraph(40, bdt_cuts, efficiencies2);
     
     graph2->SetTitle("eff/[5/2+sqrt(B)] vs BDTG cut");
-    graph2->SetMarkerColor(4);
-    graph2->SetMarkerStyle(20);
-    graph2->SetMarkerSize(1.0);
-    graph2->GetXaxis()->SetTitle("BDTG cut (>)");
+    graph2->GetYaxis()->SetLabelSize(0.05);
+    //graph2->SetMarkerColor(4);
+    //graph2->SetMarkerStyle(20);
+    //graph2->SetMarkerSize(1.0);
+    graph2->GetXaxis()->SetTitle("BDTG cut (>)");  
     graph2->GetXaxis()->SetRangeUser(-1.0,1.0);
     graph2->GetYaxis()->SetTitle("eff/[5/2+sqrt(B)]");
     //graph2->Fit("pol7"); 
     graph2->Draw("AP");
-    c2->SaveAs("~/cern/plots/bdt_cuts/Lb2chicpK_2011_2012_BDTG_cuts_Punzi.png");
+    c2->SaveAs("~/cern/new_plots/Lb2chicpK_2011_2012_BDTG_cuts_Punzi.pdf");
     //return c2;
     
     

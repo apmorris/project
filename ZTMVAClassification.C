@@ -119,32 +119,32 @@ void ZTMVAClassification( TString myMethodList = "" ) {
 // ADD IN OUR VARIABLES HERE
     
     factory->AddVariable("log(kaon_IPCHI2_OWNPV)", "log(kaon_IPCHI2_OWNPV)", "", 'D');
-    factory->AddVariable("kaon_TRACK_GhostProb", "kaon_TRACK_GhostProb", "", 'D');
+    //factory->AddVariable("kaon_TRACK_GhostProb", "kaon_TRACK_GhostProb", "", 'D');
     factory->AddVariable("kaon_PT", "kaon_PT", "", 'D');
     
     factory->AddVariable("log(proton_IPCHI2_OWNPV)", "log(proton_IPCHI2_OWNPV)", "", 'D');
-    factory->AddVariable("proton_TRACK_GhostProb", "proton_TRACK_GhostProb", "", 'D');
+    //factory->AddVariable("proton_TRACK_GhostProb", "proton_TRACK_GhostProb", "", 'D');
     factory->AddVariable("proton_PT", "proton_PT", "", 'D');
     
-    factory->AddVariable("gamma_PT", "gamma_PT", "", 'D');
-    factory->AddVariable("gamma_CL", "gamma_CL", "", 'D');  
+    //factory->AddVariable("gamma_PT", "gamma_PT", "", 'D');
+    //factory->AddVariable("gamma_CL", "gamma_CL", "", 'D');  
   
     factory->AddVariable("muminus_ProbNNmu", "muminus_ProbNNmu", "", 'D');  
-    factory->AddVariable("muminus_TRACK_GhostProb", "muminus_TRACK_GhostProb", "", 'D');  
+    //factory->AddVariable("muminus_TRACK_GhostProb", "muminus_TRACK_GhostProb", "", 'D');  
 
     factory->AddVariable("muplus_ProbNNmu", "muplus_ProbNNmu", "", 'D');  
-    factory->AddVariable("muplus_TRACK_GhostProb", "muplus_TRACK_GhostProb", "", 'D');  
+    //factory->AddVariable("muplus_TRACK_GhostProb", "muplus_TRACK_GhostProb", "", 'D');  
 
     factory->AddVariable("Lambda_b0_DTF_CHI2NDOF", "Lambda_b0_DTF_CHI2NDOF", "", 'D');
-    factory->AddVariable("log(Lambda_b0_IPCHI2_OWNPV)", "log(Lambda_b0_IPCHI2_OWNPV)", "", 'D');
+    //factory->AddVariable("log(Lambda_b0_IPCHI2_OWNPV)", "log(Lambda_b0_IPCHI2_OWNPV)", "", 'D');
     factory->AddVariable("Lambda_b0_FDS", "Lambda_b0_FDS", "", 'D');  
     factory->AddVariable("Lambda_b0_PT", "Lambda_b0_PT", "", 'D');
     
 
 
     //   TFile * input_Background = new TFile("../back.root");
-    TFile * input_Signal = new TFile("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/reduced_Lb2chicpK_MC_2011_2012_signal.root");                                  //
-    TFile * input_Background = new TFile("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/background.root");                                                  //
+    TFile * input_Signal = new TFile("/afs/cern.ch/work/a/apmorris/public/Lb2chicpK/signal_samples/reduced_Lb2chicpK_MC_2011_2012_signal.root");                                  //
+    TFile * input_Background = new TFile("/afs/cern.ch/work/a/apmorris/public/Lb2chicpK/signal_samples/background.root");                                                  //
     std::cout << "--- TMVAClassification       : Using input file for signal    : " << input_Signal->GetName() << std::endl;
     std::cout << "--- TMVAClassification       : Using input file for background : " << input_Background->GetName() << std::endl;
    

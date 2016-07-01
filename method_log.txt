@@ -1,0 +1,243 @@
+Log of final process.
+
+_______________
+
+Signal samples:
+_______________
+
+cutTree.C run with following cuts on signal data sample:
+
+    "Lambda_b0_DTF_MASS_constr1>5500 && Lambda_b0_DTF_MASS_constr1<5700 && Lambda_b0_DTF_CHI2NDOF<7 && Lambda_b0_DTF_CHI2NDOF>0 && Lambda_b0_IPCHI2_OWNPV<25 && Lambda_b0_FDS>10 && kaon_IPCHI2_OWNPV>4 && proton_IPCHI2_OWNPV>4 && gamma_CL>0.03 && chi_c_M>3400 && chi_c_M<3700 && muplus_TRACK_GhostProb<0.3 && muminus_TRACK_GhostProb<0.3 && kaon_TRACK_GhostProb<0.3 && proton_TRACK_GhostProb<0.3 && min(muplus_ProbNNmu,muminus_ProbNNmu)>0.1 && (Lambda_b0_L0MuonDecision_TOS==1||Lambda_b0_L0DiMuonDecision_TOS==1) &&(Lambda_b0_Hlt1DiMuonHighMassDecision_TOS==1||Lambda_b0_Hlt1DiMuonLowMassDecision_TOS==1||Lambda_b0_Hlt1TrackMuonDecision_TOS==1||Lambda_b0_Hlt1SingleMuonHighPTDecision_TOS==1||Lambda_b0_Hlt1TrackAllL0Decision_TOS==1) &&(Lambda_b0_Hlt2DiMuonDetachedDecision_TOS==1||Lambda_b0_Hlt2DiMuonDetachedJPsiDecision_TOS==1||Lambda_b0_Hlt2DiMuonDetachedHeavyDecision_TOS==1) && Lambda_b0_pi0veto==1"
+    
+first removing the chic2 peak from the MC with "chi_c_BKGCAT==0 && (Lambda_b0_BKGCAT==0||Lambda_b0_BKGCAT==10||Lambda_b0_BKGCAT==50)" gives 210103 entries
+
+without the trigger, MC sample goes from 210103 to 122047
+
+after the trigger is applied as well, MC sample goes from 122047 to 102046
+    
+    
+newReduceTree.C is applied to both data and MC.
+
+
+fit_MC.C applied to range 5500-5700:
+
+ **********
+ **   18 **HESSE        4000
+ **********
+ COVARIANCE MATRIX CALCULATED SUCCESSFULLY
+ FCN=320475 FROM HESSE     STATUS=OK             61 CALLS         731 TOTAL
+                     EDM=2.68417e-05    STRATEGY= 1      ERROR MATRIX ACCURATE
+  EXT PARAMETER                                INTERNAL      INTERNAL
+  NO.   NAME      VALUE            ERROR       STEP SIZE       VALUE
+   1  alpha1       2.48274e+00   6.66447e-02   9.45814e-05  -1.19062e-01
+   2  alpha2      -2.28024e+00   6.03164e-02   1.24234e-04   1.71663e-01
+   3  frac2        6.50422e-01   2.32597e-02   1.33723e-04   3.05577e-01
+   4  mean         5.61968e+03   1.63051e-02   4.51270e-05  -1.02864e-01
+   5  n1           1.23132e+00   7.65035e-02   8.01913e-05  -1.03651e+00
+   6  n2           1.99690e+00   1.99241e-01   2.96594e-04  -6.85790e-01
+   7  sigma1       3.87937e+00   5.27918e-02   1.61188e-05  -1.22804e+00
+   8  sigma2       7.01118e+00   1.65098e-01   2.35653e-05  -1.07284e+00
+                               ERR DEF= 0.5
+ EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  8    ERR DEF=0.5
+  4.443e-03 -1.449e-03  9.527e-04 -2.359e-04 -4.761e-03 -5.189e-03  1.866e-03  8.115e-03
+ -1.449e-03  3.639e-03 -3.190e-04  7.336e-06  1.482e-03  1.098e-02 -4.286e-04 -3.674e-03
+  9.527e-04 -3.190e-04  5.414e-04 -2.618e-05 -6.699e-04 -1.745e-03  1.145e-03  3.628e-03
+ -2.359e-04  7.336e-06 -2.618e-05  2.659e-04  2.645e-04  5.217e-05 -4.922e-05 -2.855e-04
+ -4.761e-03  1.482e-03 -6.699e-04  2.645e-04  5.854e-03  4.751e-03 -1.221e-03 -6.598e-03
+ -5.189e-03  1.098e-02 -1.745e-03  5.217e-05  4.751e-03  3.973e-02 -3.112e-03 -1.539e-02
+  1.866e-03 -4.286e-04  1.145e-03 -4.922e-05 -1.221e-03 -3.112e-03  2.787e-03  7.245e-03
+  8.115e-03 -3.674e-03  3.628e-03 -2.855e-04 -6.598e-03 -1.539e-02  7.245e-03  2.726e-02
+ PARAMETER  CORRELATION COEFFICIENTS
+       NO.  GLOBAL      1      2      3      4      5      6      7      8
+        1  0.97922   1.000 -0.360  0.614 -0.217 -0.934 -0.391  0.530  0.737
+        2  0.93413  -0.360  1.000 -0.227  0.007  0.321  0.913 -0.135 -0.369
+        3  0.98452   0.614 -0.227  1.000 -0.069 -0.376 -0.376  0.932  0.944
+        4  0.24970  -0.217  0.007 -0.069  1.000  0.212  0.016 -0.057 -0.106
+        5  0.96756  -0.934  0.321 -0.376  0.212  1.000  0.312 -0.302 -0.522
+        6  0.93262  -0.391  0.913 -0.376  0.016  0.312  1.000 -0.296 -0.468
+        7  0.94575   0.530 -0.135  0.932 -0.057 -0.302 -0.296  1.000  0.831
+        8  0.97644   0.737 -0.369  0.944 -0.106 -0.522 -0.468  0.831  1.000
+
+    
+ZTMVAClassification for signal mode:
+
+- Ranking of input variables
+
+--- TFHandler_Factory        :
+--- TFHandler_Factory        : Ranking input variables (method unspecific)...
+--- IdTransformation         : Ranking result (top variable is best ranked)
+--- IdTransformation         : ----------------------------------------------------
+--- IdTransformation         : Rank : Variable                    : Separation
+--- IdTransformation         : ----------------------------------------------------
+--- IdTransformation         :    1 : Lambda_b0_PT                : 4.075e-01
+--- IdTransformation         :    2 : proton_PT                   : 3.823e-01
+--- IdTransformation         :    3 : Lambda_b0_DTF_CHI2NDOF      : 3.726e-01
+--- IdTransformation         :    4 : gamma_PT                    : 2.867e-01
+--- IdTransformation         :    5 : log(proton_IPCHI2_OWNPV)    : 2.773e-01
+--- IdTransformation         :    6 : log(Lambda_b0_IPCHI2_OWNPV) : 2.583e-01
+--- IdTransformation         :    7 : log(kaon_IPCHI2_OWNPV)      : 2.575e-01
+--- IdTransformation         :    8 : Lambda_b0_FDS               : 2.457e-01
+--- IdTransformation         :    9 : kaon_PT                     : 2.156e-01
+--- IdTransformation         :   10 : muplus_ProbNNmu             : 1.727e-01
+--- IdTransformation         :   11 : muminus_ProbNNmu            : 1.663e-01
+--- IdTransformation         :   12 : gamma_CL                    : 5.726e-02
+--- IdTransformation         : ----------------------------------------------------
+    
+    
+MVA applied and BDT_cut.C applied, found maximum of eff/(5/2 + sqrt(B)) at 0.7    
+    
+Fitted at bdtg>=0.7, results:
+
+     **********
+ **   18 **HESSE        3500
+ **********
+ COVARIANCE MATRIX CALCULATED SUCCESSFULLY
+ FCN=-3001.07 FROM HESSE     STATUS=OK             50 CALLS         292 TOTAL
+                     EDM=0.00367071    STRATEGY= 1      ERROR MATRIX ACCURATE
+  EXT PARAMETER                                INTERNAL      INTERNAL
+  NO.   NAME      VALUE            ERROR       STEP SIZE       VALUE
+   1  a1          -1.03943e-01   4.79213e-02   3.63672e-03  -2.93218e+00
+   2  bgYield      1.70364e+03   4.36901e+01   5.55332e-05  -1.45399e+00
+   3  frac3        1.38096e-01   1.46065e-02   2.75359e-03  -3.33324e+00
+   4  mean         5.62067e+03   3.65398e-01   7.80442e-04  -2.56180e+01
+   5  mean3        5.57561e+03   1.29116e+00   1.12812e-03   5.37645e-01
+   6  sigYield     3.59445e+02   2.37631e+01   4.69206e-04  -1.18931e+00
+   7  sigma3       9.99618e+00   9.86393e-01   2.52357e-02   1.52956e+00
+                               ERR DEF= 0.5
+ EXTERNAL ERROR MATRIX.    NDIM=  30    NPAR=  7    ERR DEF=0.5
+  2.304e-03 -6.985e-02  1.074e-04  6.725e-04  6.931e-03  6.984e-02 -9.016e-05
+ -6.985e-02  1.909e+03  4.165e-02 -1.332e-01  1.558e-01 -2.051e+02 -1.313e-02
+  1.074e-04  4.165e-02  2.137e-04 -7.696e-06  1.192e-03 -4.164e-02 -8.781e-05
+  6.725e-04 -1.332e-01 -7.696e-06  1.335e-01  5.022e-03  1.334e-01  3.339e-05
+  6.931e-03  1.558e-01  1.192e-03  5.022e-03  1.668e+00 -1.559e-01 -4.794e-03
+  6.984e-02 -2.051e+02 -4.164e-02  1.334e-01 -1.559e-01  5.647e+02  1.313e-02
+ -9.016e-05 -1.313e-02 -8.781e-05  3.339e-05 -4.794e-03  1.313e-02  1.568e-02
+ PARAMETER  CORRELATION COEFFICIENTS
+       NO.  GLOBAL      1      2      3      4      5      6      7
+        1  0.20599   1.000 -0.033  0.153  0.038  0.112  0.061 -0.015
+        2  0.20396  -0.033  1.000  0.065 -0.008  0.003 -0.198 -0.002
+        3  0.21499   0.153  0.065  1.000 -0.001  0.063 -0.120 -0.048
+        4  0.04171   0.038 -0.008 -0.001  1.000  0.011  0.015  0.001
+        5  0.12421   0.112  0.003  0.063  0.011  1.000 -0.005 -0.030
+        6  0.23639   0.061 -0.198 -0.120  0.015 -0.005  1.000  0.004
+        7  0.05512  -0.015 -0.002 -0.048  0.001 -0.030  0.004  1.000
+    
+    
+Applied vetoes to the mass switch variables in the data and MC, refit data and updated efficiencies and BR calculation. Fit result is here:
+     **********
+ **   18 **HESSE        3500
+ **********
+ COVARIANCE MATRIX CALCULATED SUCCESSFULLY
+ FCN=-2117.38 FROM HESSE     STATUS=OK             50 CALLS         376 TOTAL
+                     EDM=8.37785e-05    STRATEGY= 1      ERROR MATRIX ACCURATE
+  EXT PARAMETER                                INTERNAL      INTERNAL
+  NO.   NAME      VALUE            ERROR       STEP SIZE       VALUE
+   1  a1          -1.60003e-01   5.31077e-02   1.39782e-04  -3.25736e-01
+   2  bgYield      1.38286e+03   3.93326e+01   9.32648e-06  -1.46557e+00
+   3  frac3        1.42217e-01   1.63763e-02   5.22068e-04   6.49587e+00
+   4  mean         5.62052e+03   3.93232e-01   1.01483e-04  -1.80270e-01
+   5  mean3        5.57546e+03   1.40687e+00   4.11737e-05   5.34241e-01
+   6  sigYield     3.00201e+02   2.15493e+01   7.80446e-05  -1.22251e+00
+   7  sigma3       9.99994e+00   9.26953e-01   4.06828e-03   1.57599e+00
+                               ERR DEF= 0.5
+ EXTERNAL ERROR MATRIX.    NDIM=  30    NPAR=  7    ERR DEF=0.5
+  2.832e-03  6.972e-02  1.332e-04 -8.131e-04 -8.347e-03 -6.971e-02 -2.862e-06
+  6.972e-02  1.547e+03 -4.211e-02 -1.636e-01  1.778e-01 -1.642e+02  3.323e-04
+  1.332e-04 -4.211e-02  2.688e-04  1.829e-05 -1.602e-03  4.211e-02 -2.750e-06
+ -8.131e-04 -1.636e-01  1.829e-05  1.546e-01  5.715e-03  1.636e-01 -9.584e-07
+ -8.347e-03  1.778e-01 -1.602e-03  5.715e-03  1.980e+00 -1.778e-01  1.668e-04
+ -6.971e-02 -1.642e+02  4.211e-02  1.636e-01 -1.778e-01  4.644e+02 -3.323e-04
+ -2.862e-06  3.323e-04 -2.750e-06 -9.584e-07  1.668e-04 -3.323e-04  2.334e-04
+ PARAMETER  CORRELATION COEFFICIENTS
+       NO.  GLOBAL      1      2      3      4      5      6      7
+        1  0.20487   1.000  0.033  0.153 -0.039 -0.111 -0.061 -0.004
+        2  0.20047   0.033  1.000 -0.065 -0.011  0.003 -0.194  0.001
+        3  0.21157   0.153 -0.065  1.000  0.003 -0.069  0.119 -0.011
+        4  0.04382  -0.039 -0.011  0.003  1.000  0.010  0.019 -0.000
+        5  0.12395  -0.111  0.003 -0.069  0.010  1.000 -0.006  0.008
+        6  0.23302  -0.061 -0.194  0.119  0.019 -0.006  1.000 -0.001
+        7  0.01308  -0.004  0.001 -0.011 -0.000  0.008 -0.001  1.000
+    
+
+______________________
+
+Normalisation samples:
+______________________    
+
+cutTree.C run with following cuts on normalisation data sample:
+
+    "Lambda_b0_DTF_MASS_constr1>5550 && Lambda_b0_DTF_MASS_constr1<5700 && Lambda_b0_DTF_CHI2NDOF<6 &&  (Lambda_b0_L0MuonDecision_TOS==1||Lambda_b0_L0DiMuonDecision_TOS==1) &&(Lambda_b0_Hlt1DiMuonHighMassDecision_TOS==1||Lambda_b0_Hlt1DiMuonLowMassDecision_TOS==1||Lambda_b0_Hlt1TrackMuonDecision_TOS==1||Lambda_b0_Hlt1SingleMuonHighPTDecision_TOS==0||Lambda_b0_Hlt1TrackAllL0Decision_TOS==1) &&(Lambda_b0_Hlt2DiMuonDetachedDecision_TOS==1 || Lambda_b0_Hlt2DiMuonDetachedJPsiDecision_TOS==1 || Lambda_b0_Hlt2DiMuonDetachedHeavyDecision_TOS==1)  &&  kaon_TRACK_GhostProb<0.1 && kaon_ProbNNk > 0.3 &&  proton_TRACK_GhostProb<0.1 && proton_ProbNNp > 0.3 && Jpsi_M >3000 && Jpsi_M < 3200 && min(muplus_ProbNNmu,muminus_ProbNNmu)>0.2 && muplus_TRACK_GhostProb<0.1 && muminus_TRACK_GhostProb<0.1"
+
+
+
+without the trigger, MC sample goes from 868696 to 557228
+
+after the trigger is applied as well, MC sample goes from 557228 to 455325
+
+
+
+newReduceTree_norm.C is applied to both data and MC.
+
+
+
+fit_MC_norm.C applied to range 5550-5700:
+
+**********
+ **   18 **HESSE        4000
+ **********
+ COVARIANCE MATRIX CALCULATED SUCCESSFULLY
+ FCN=1.37364e+06 FROM HESSE     STATUS=OK             61 CALLS         659 TOTAL
+                     EDM=4.20791e-05    STRATEGY= 1      ERROR MATRIX ACCURATE
+  EXT PARAMETER                                INTERNAL      INTERNAL
+  NO.   NAME      VALUE            ERROR       STEP SIZE       VALUE
+   1  alpha1       2.18020e+00   2.85078e-02   1.38432e-04  -2.56034e-01
+   2  alpha2      -2.79102e+00   6.74385e-02   1.51818e-04  -1.49177e-02
+   3  cbRatio      3.07172e-01   1.49204e-02   1.72642e-04  -5.69984e-01
+   4  mean         5.61985e+03   9.58397e-03   5.56682e-05  -9.66293e-02
+   5  n1           1.49358e+00   8.14447e-02   2.09300e-04  -9.70542e-01
+   6  n2           1.45276e+00   1.09864e-01   2.59028e-04  -8.39538e-01
+   7  sigma1       8.46303e+00   1.32851e-01   2.86985e-05  -1.01453e+00
+   8  sigma2       4.93976e+00   3.42842e-02   5.03572e-06  -1.44512e+00
+                               ERR DEF= 0.5
+ EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  8    ERR DEF=0.5
+  8.127e-04 -2.535e-04  6.531e-05 -1.227e-05 -1.930e-03 -5.270e-04 -5.006e-05 -2.291e-04
+ -2.535e-04  4.549e-03  6.488e-04 -9.492e-05  2.052e-03  7.037e-03 -6.781e-03 -1.234e-03
+  6.531e-05  6.488e-04  2.227e-04 -7.333e-06  3.736e-04  7.575e-04 -1.902e-03 -4.816e-04
+ -1.227e-05 -9.492e-05 -7.333e-06  9.185e-05  1.178e-05 -1.498e-04  8.464e-05  1.376e-05
+ -1.930e-03  2.052e-03  3.736e-04  1.178e-05  6.634e-03  2.896e-03 -4.299e-03 -6.210e-04
+ -5.270e-04  7.037e-03  7.575e-04 -1.498e-04  2.896e-03  1.207e-02 -8.559e-03 -1.345e-03
+ -5.006e-05 -6.781e-03 -1.902e-03  8.464e-05 -4.299e-03 -8.559e-03  1.765e-02  3.880e-03
+ -2.291e-04 -1.234e-03 -4.816e-04  1.376e-05 -6.210e-04 -1.345e-03  3.880e-03  1.175e-03
+ PARAMETER  CORRELATION COEFFICIENTS
+       NO.  GLOBAL      1      2      3      4      5      6      7      8
+        1  0.94513   1.000 -0.132  0.154 -0.045 -0.831 -0.168 -0.013 -0.234
+        2  0.98156  -0.132  1.000  0.645 -0.147  0.373  0.950 -0.757 -0.534
+        3  0.99079   0.154  0.645  1.000 -0.051  0.307  0.462 -0.959 -0.941
+        4  0.18770  -0.045 -0.147 -0.051  1.000  0.015 -0.142  0.066  0.042
+        5  0.94333  -0.831  0.373  0.307  0.015  1.000  0.324 -0.397 -0.222
+        6  0.97119  -0.168  0.950  0.462 -0.142  0.324  1.000 -0.586 -0.357
+        7  0.98466  -0.013 -0.757 -0.959  0.066 -0.397 -0.586  1.000  0.852
+        8  0.95881  -0.234 -0.534 -0.941  0.042 -0.222 -0.357  0.852  1.000
+        
+        
+        
+ZTMVAClassification_norm for normalisation mode:
+
+--- IdTransformation         : Ranking result (top variable is best ranked)
+--- IdTransformation         : ----------------------------------------------------
+--- IdTransformation         : Rank : Variable                    : Separation
+--- IdTransformation         : ----------------------------------------------------
+--- IdTransformation         :    1 : Lambda_b0_DTF_CHI2NDOF      : 2.078e-01
+--- IdTransformation         :    2 : proton_PT                   : 1.723e-01
+--- IdTransformation         :    3 : log(proton_IPCHI2_OWNPV)    : 1.615e-01
+--- IdTransformation         :    4 : log(kaon_IPCHI2_OWNPV)      : 1.477e-01
+--- IdTransformation         :    5 : Lambda_b0_FDS               : 1.454e-01
+--- IdTransformation         :    6 : Lambda_b0_PT                : 1.416e-01
+--- IdTransformation         :    7 : log(Lambda_b0_IPCHI2_OWNPV) : 1.217e-01
+--- IdTransformation         :    8 : muplus_ProbNNmu             : 8.674e-02
+--- IdTransformation         :    9 : muminus_ProbNNmu            : 8.508e-02
+--- IdTransformation         :   10 : kaon_PT                     : 5.156e-02
+--- IdTransformation         : ----------------------------------------------------
+
+MVA applied and BDT_cut_norm.C applied, found maximum of S/sqrt(S+B) at -0.55
+

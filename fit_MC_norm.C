@@ -8,7 +8,7 @@
 */
 
                                                                                     //
-void fit_MC_norm(std::string input_file = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/reduced_Lb2JpsipK_MC_2011_2012_norm.root", std::string out_file_mass = "~/cern/plots/fitting/Lb2JpsipK_MC_2011_2012_cut_mass_fit.pdf"){
+void fit_MC_norm(std::string input_file = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/reduced_Lb2JpsipK_MC_2011_2012_norm.root", std::string out_file_mass = "~/cern/plots/fitting/Lb2JpsipK_MC_2011_2012_cut_mass_fit_doublegauss.pdf"){
                                                                                     //
     gROOT->ProcessLine(".L ~/cern/project/lhcbStyle.C");
     lhcbStyle();
@@ -23,7 +23,7 @@ void fit_MC_norm(std::string input_file = "/afs/cern.ch/work/a/apmorris/private/
 
 
     // -- signal, mass shape
-    RooRealVar Lambda_b0_DTF_MASS_constr1("Lambda_b0_DTF_MASS_constr1","m(J/#psi pK^{-})", 5550., 5700., "MeV/c^{2}"); 
+    RooRealVar Lambda_b0_DTF_MASS_constr1("Lambda_b0_DTF_MASS_constr1","m(J/#psi p K^{-})", 5550., 5700., "MeV/c^{2}"); 
     RooRealVar Jpsi_M("Jpsi_M","m(#mu#mu)", 3000., 3200., "MeV/c^{2}"); 
     //RooRealVar chi_c_M("chi_c_M","m(J/#psi#gamma)", 3350., 3750., "MeV/c^{2}"); 
     RooRealVar mean("mean","mean", 5620., 5595., 5650.);
@@ -79,7 +79,7 @@ void fit_MC_norm(std::string input_file = "/afs/cern.ch/work/a/apmorris/private/
  //RooFit::Cut("Lambda_b0_DTF_MASS_constr1 > 5580")
     RooPlot* plot = Lambda_b0_DTF_MASS_constr1.frame();
 
-    plot->SetAxisRange(5500., 5750.);
+    plot->SetAxisRange(5550., 5700.);
 
 
     pdf.fitTo( ds );
@@ -95,23 +95,27 @@ void fit_MC_norm(std::string input_file = "/afs/cern.ch/work/a/apmorris/private/
     plotPullMass->addPlotable( plot->pullHist() );
     //plotPullMass->SetMinimum();
     //plotPullMass->SetMaximum();
-    plotPullMass->SetAxisRange(5500., 5750.);
+    plotPullMass->SetAxisRange(5550., 5700.);
     TCanvas* c = new TCanvas();
     c->cd();
 
-    TPad* pad1 = new TPad("pad1","pad1", 0, 0.3, 1, 1.0);
-    pad1->SetBottomMargin(0.1);
-    pad1->SetTopMargin(0.1);
+    TPad* pad1 = new TPad("pad1","pad1", 0, 0.3, 1, 0.95);
+    //pad1->SetBottomMargin(0.1);
+    //pad1->SetTopMargin(0.1);
     pad1->Draw();
     
     //TPad* pad2 = new TPad("pad2","pad2", 0, 0.05, 1, 0.4);
-    TPad* pad2 = new TPad("pad2","pad2", 0, 0, 1, 0.3);
-    pad2->SetBottomMargin(0.1);
-    pad2->SetTopMargin(0.0);
-    pad2->Draw();
+    TPad* pad2 = new TPad("pad2","pad2", 0, 0.05, 1, 0.3);
+     pad2->Draw();
+     plotPullMass->GetXaxis()->SetLabelSize(0.1);
+    plotPullMass->GetYaxis()->SetLabelSize(0.1);
+     plotPullMass->GetXaxis()->SetTitleSize(0.1);
+    plotPullMass->GetYaxis()->SetTitleSize(0.1);
+    //pad2->SetBottomMargin(0.1);
+    //pad2->SetTopMargin(0.0);
 
-    //pdf.plotOn( plot, RooFit::Components( cb1 ), RooFit::LineColor( kRed ), RooFit::LineStyle(kDashed) );
-    //pdf.plotOn( plot, RooFit::Components( cb2 ), RooFit::LineColor( kOrange ), RooFit::LineStyle(kDotted) );
+    pdf.plotOn( plot, RooFit::Components( cb1 ), RooFit::LineColor( kRed ), RooFit::LineStyle(kDashed) );
+    pdf.plotOn( plot, RooFit::Components( cb2 ), RooFit::LineColor( kOrange ), RooFit::LineStyle(kDotted) );
     //pdf.plotOn( plot, RooFit::Components( bgPdf ), RooFit::LineColor( kBlue ), RooFit::LineStyle(kDashDotted) );
 
     pad1->cd();

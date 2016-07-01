@@ -26,24 +26,29 @@ void fit_and_weights(){
     gStyle->SetPadLeftMargin(0.14);
     gStyle->SetTitleH(0.01);*/
                                                                                     //
-    const std::string filename("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/reduced_Lb2chicpK_2011_2012_signal.root");           
-    const std::string treename = "DecayTree";                                         
-    const std::string out_file_mass("~/cern/plots/fitting/Lb2chicpK_2011_2012_mass_fit_before_bdt.pdf");                                   
-                                                                                    //
+    const std::string filename("/afs/cern.ch/work/a/apmorris/public/Lb2chicpK/signal_samples/Lb2chicpK_2011_2012_signal_withbdt.root");           
+    const std::string treename = "withbdt";                                         
+    const std::string out_file_mass("~/cern/new_plots/Lb2chicpK_2011_2012_mass_fit_after_bdt_cut_085.pdf");                                   
+                                         
+    const std::string cuts("bdtg >= 0.85");                                         
+    //const std::string cuts("(Lambda_b0_DTF_MASS_proton_as_kaon >5387. || Lambda_b0_DTF_MASS_proton_as_kaon <5347.) && (Lambda_b0_DTF_MASS_proton_as_pion >5300. || Lambda_b0_DTF_MASS_proton_as_pion <5260.) && bdtg >= 0.7");
+
+
 
     TFile* file = TFile::Open( filename.c_str() );
     if( !file ) std::cout << "file " << filename << " does not exist" << std::endl;
     TTree* tree = (TTree*)file->Get( treename.c_str() );
     if( !tree ) std::cout << "tree " << treename << " does not exist" << std::endl;
 
-
+    
+    TTree* rTree1 = tree->CopyTree( cuts.c_str() );
 
     // -- signal, mass shape
-    RooRealVar Lambda_b0_DTF_MASS_constr1("Lambda_b0_DTF_MASS_constr1","m(#chi_{c1}pK^{-})", 5550., 5700., "MeV/c^{2}");
+    RooRealVar Lambda_b0_DTF_MASS_constr1("Lambda_b0_DTF_MASS_constr1","m(#chi_{c1}pK^{-})", 5500., 5700., "MeV/c^{2}");
     //RooRealVar Lambda_b0_DTF_MASS_constr2("Lambda_b0_DTF_MASS_constr2","m(#chi_{c}pK^{-})", 5550., 5700., "MeV/c^{2}"); 
-    RooRealVar Jpsi_M("Jpsi_M","m(#mu#mu)", 3000., 3200., "MeV/c^{2}"); 
-    RooRealVar chi_c_M("chi_c_M","m(J/#psi#gamma)", 3400., 3700., "MeV/c^{2}"); 
-    RooRealVar mean("mean","mean", 5630., 5610., 5650.);
+    RooRealVar Jpsi_M("Jpsi_M","m(#mu#mu)", 2000., 4200., "MeV/c^{2}"); 
+    RooRealVar chi_c_M("chi_c_M","m(J/#psi#gamma)", 2400., 4700., "MeV/c^{2}"); 
+    RooRealVar mean("mean","mean", 5620., 5615., 5630.);
     RooRealVar sigma1("sigma1","sigma1", 10., 1., 100.);
     RooRealVar sigma2("sigma2","sigma2", 30.0, 5.0, 300.0);
     RooRealVar sigmaT("sigmaT", "sigmaT", 1.9, 1., 100.);
@@ -56,7 +61,7 @@ void fit_and_weights(){
     RooRealVar bdtg("bdtg", "bdtg", -1.0, 1.0);                                    //
     RooRealVar frac2("frac2","frac2", 0.3, 0., 1.);
     
-    Lambda_b0_DTF_MASS_constr1.setBins(75);
+    Lambda_b0_DTF_MASS_constr1.setBins(100);
     //Lambda_b0_DTF_MASS_constr2.setBins(75);
     
     RooRealVar proton_ProbNNp("proton_ProbNNp","proton_ProbNNp",0.0,1.0);
@@ -116,28 +121,32 @@ void fit_and_weights(){
     RooRealVar sigYield("sigYield","sig Yield", 4e2, 0., 1e4);
     RooRealVar bgYield("bgYield","bg Yield", 1e2, 0., 5e5);
 
-    /*8/2/16
+    /*12/3/16
     EXT PARAMETER                                INTERNAL      INTERNAL
   NO.   NAME      VALUE            ERROR       STEP SIZE       VALUE
-   1  alpha1       2.50957e+00   5.68360e-02   2.65700e-03  -1.07061e-01
-   2  alpha2      -2.28664e+00   5.52765e-02   3.09340e-03  -6.11388e+00
-   3  frac2        6.51083e-01   2.02553e-02   3.33095e-03   3.06964e-01
-   4  mean         5.61967e+03   1.61655e-02   2.24983e-04  -1.02914e-01
-   5  n1           1.18728e+00   8.03720e-02   2.61213e-03  -1.04832e+00
-   6  n2           1.97964e+00   1.78120e-01   7.39156e-03  -6.90351e-01
-   7  sigma1       3.88071e+00   4.77592e-02   4.00488e-04  -1.22796e+00
-   8  sigma2       7.03034e+00   1.36260e-01   1.79652e-04  -1.41525e+00
+   1  alpha1       2.48274e+00   6.66447e-02   9.45814e-05  -1.19062e-01
+   2  alpha2      -2.28024e+00   6.03164e-02   1.24234e-04   1.71663e-01
+   3  frac2        6.50422e-01   2.32597e-02   1.33723e-04   3.05577e-01
+   4  mean         5.61968e+03   1.63051e-02   4.51270e-05  -1.02864e-01
+   5  n1           1.23132e+00   7.65035e-02   8.01913e-05  -1.03651e+00
+   6  n2           1.99690e+00   1.99241e-01   2.96594e-04  -6.85790e-01
+   7  sigma1       3.87937e+00   5.27918e-02   1.61188e-05  -1.22804e+00
+   8  sigma2       7.01118e+00   1.65098e-01   2.35653e-05  -1.07284e+00
     */
+    
     //put in values from fit_MC here                                                //
- 
-    alpha1.setVal( 2.50957e+00 );                                                   //
-    alpha2.setVal( -2.28664e+00 );                                                 //
-    n1.setVal( 1.18728e+00 );                                                       //
-    n2.setVal( 1.97964e+00 );                                                       //
-    frac2.setVal( 6.51083e-01 );                                                    //
-    sigma1.setVal( 3.88071e+00 );                                                   //
-    sigma2.setVal( 7.03034e+00 );                                                   //
-                                                                                    
+                                                                                    //
+    alpha1.setVal( 2.48274e+00 );                                                   //
+    alpha2.setVal( -2.28024e+00 );                                                 //
+    n1.setVal( 1.23132e+00 );                                                       //
+    n2.setVal( 1.99690e+00 );                                                       //
+    frac2.setVal( 6.50422e-01 );                                                    //
+    sigma1.setVal( 3.87937e+00 );                                                   //
+    sigma2.setVal( 7.01118e+00 );                                                   //
+    
+    mean.setVal(5.62052e+03);
+    
+    mean.setConstant(true);
     alpha1.setConstant( true );
     alpha2.setConstant( true );
     frac2.setConstant( true );
@@ -161,10 +170,11 @@ void fit_and_weights(){
     
     // -- bg, mass shape
     RooRealVar a1("a1","a1", 0., -0.5, 0.5);
+    RooExponential exp("exp", "exp", Lambda_b0_DTF_MASS_constr1, a1);
     RooChebychev comb("comb","comb", Lambda_b0_DTF_MASS_constr1, a1);
-    RooRealVar mean3("mean3","mean3", 5560., 5500., 5600.);
-    RooRealVar sigma3("sigma3","sigma3", 5., 1., 10.);
-    RooRealVar frac3("frac3","frac", 0.2, -0.1, 0.3);
+    RooRealVar mean3("mean3","mean3", 5580., 5500., 5600.);
+    RooRealVar sigma3("sigma3","sigma3", 5., 1., 100.);
+    RooRealVar frac3("frac3","frac", 0.2, -0.1, 1.0);
     RooGaussian gauss3("gauss3","gauss3", Lambda_b0_DTF_MASS_constr1, mean3, sigma3);
     RooAddPdf bg("bg","bg", RooArgList(gauss3, comb), RooArgList(frac3));
 
@@ -218,7 +228,7 @@ void fit_and_weights(){
     obs.add(kaon_ProbNNk);
 
     
-    RooDataSet ds("ds","ds", obs, RooFit::Import(*tree)); 
+    RooDataSet ds("ds","ds", obs, RooFit::Import(*rTree1)); 
 
     RooPlot* plot = Lambda_b0_DTF_MASS_constr1.frame();
 
@@ -247,7 +257,7 @@ void fit_and_weights(){
     plotPullMass->GetXaxis()->SetTitleSize(0.1);
     plotPullMass->GetYaxis()->SetTitleSize(0.1);
 
-    pdf.plotOn( plot, RooFit::Components( sig ), RooFit::LineColor( kTeal ), RooFit::LineStyle(kDashed) );
+    pdf.plotOn( plot, RooFit::Components( sig ),  RooFit::LineColor( kTeal ),   RooFit::LineStyle(kDashed) );
     pdf.plotOn( plot, RooFit::Components( comb ), RooFit::LineColor( kOrange ), RooFit::LineStyle(kDashed) );
     pdf.plotOn( plot, RooFit::Components( gauss3 ), RooFit::LineColor( kViolet ), RooFit::LineStyle(kDashed) );
     //pdf.plotOn( plot, RooFit::Components( *student ), RooFit::LineColor( kTeal ), RooFit::LineStyle(kDashed) );
@@ -262,8 +272,12 @@ void fit_and_weights(){
 
     c->SaveAs(out_file_mass.c_str());
 
-// this is the sweighting
+    std::cout << rTree1->GetEntries() << " events with the following cut applied: " << cuts.c_str() << std::endl;
 
+
+
+// this is the sweighting
+/*
     RooStats::SPlot* sData = new RooStats::SPlot("sData","An SPlot",
             ds, &pdf, RooArgList(sigYield, bgYield) );
 
@@ -271,10 +285,10 @@ void fit_and_weights(){
     RooDataSet * dataw_z = new RooDataSet(ds.GetName(),ds.GetTitle(),&ds,*(ds.get()),0,"sigYield_sw") ;
     
     TTree *tree_data = (TTree*)dataw_z->tree();
-    TFile * newfile = TFile::Open("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/reduced_Lb2chicpK_2011_2012_signal_weighted.root","RECREATE");
+    TFile * newfile = TFile::Open("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/Lb2chicpK_2011_2012_signal_weighted.root","RECREATE");
     tree_data->Write();
     newfile->Close();  
-    
+    */
      
  /* 
     TCanvas* d = new TCanvas();

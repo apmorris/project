@@ -17,11 +17,11 @@ void PID_misidentification() {
 
     // -- define tuple file name, tuple name and cuts to apply-----------------------
     // -- and also the name of the output file
-    const std::string filename = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/Lb2chicpK_2011_2012_signal_withbdt_cut_08.root";
+    const std::string filename = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/Lb2chicpK_2011_2012_signal_withbdt.root";
     const std::string treename = "withbdt";
     const std::string outFilename("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/Lb2chicpK_2011_2012_swappedmass.root");
     
-    const std::string cuts = "Lambda_b0_DTF_MASS_constr1 > 5550. && Lambda_b0_DTF_MASS_constr1 < 5700.";
+    const std::string cuts = "";
     //const std::string cuts = "Lambda_b0_DTF_MASS_constr1 > 5650. && Lambda_b0_DTF_MASS_constr1 < 5700.";
     
     const std::string outputPlot("~/cern/plots/p->[K,pi]_signal_MC.pdf");
@@ -62,6 +62,7 @@ void PID_misidentification() {
     double muplus_M, muplus_P, muplus_PE, muplus_PT, muplus_PX, muplus_PY, muplus_PZ, muplus_ETA, muplus_ProbNNmu, muplus_TRACK_GhostProb;
     double Lambda_b0_DTF_MASS_constr1, Lambda_b0_DTF_MASS_constr2, Lambda_b0_DTF_CHI2NDOF, Lambda_b0_IPCHI2_OWNPV;
     double Lambda_b0_FDS, Lambda_b0_pi0veto, Lambda_b0_PT; 
+    float bdtg; 
     
     Char_t Lambda_b0_L0MuonDecision_TOS, Lambda_b0_L0DiMuonDecision_TOS;
     Char_t Lambda_b0_Hlt1DiMuonHighMassDecision_TOS, Lambda_b0_Hlt1DiMuonLowMassDecision_TOS;
@@ -162,6 +163,8 @@ void PID_misidentification() {
     rTree1->SetBranchAddress("Lambda_b0_Hlt2DiMuonDetachedHeavyDecision_TOS", &Lambda_b0_Hlt2DiMuonDetachedHeavyDecision_TOS);
     rTree1->SetBranchAddress("Lambda_b0_pi0veto", &Lambda_b0_pi0veto);
     rTree1->SetBranchAddress("Lambda_b0_PT", &Lambda_b0_PT);
+    
+    rTree1->SetBranchAddress("bdtg", &bdtg);
 
    
     
@@ -261,7 +264,7 @@ void PID_misidentification() {
     rTree2->Branch("Lambda_b0_pi0veto", &Lambda_b0_pi0veto, "Lambda_b0_pi0veto/D");
     rTree2->Branch("Lambda_b0_PT", &Lambda_b0_PT, "Lambda_b0_PT/D");
                             
-                                              
+    rTree2->Branch("bdtg", &bdtg, "bdtg/F");
    
     
     

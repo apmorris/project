@@ -6,20 +6,23 @@
 	Script to apply manual cuts to the new data. 
 
 */
-
+#include "TStopwatch.h"
 
 void newReduceTree_norm(){ 
 
     // -- define tuple file name, tuple name and cuts to apply
     // -- and also the name of the output file
     
-    const std::string filename = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/Lb2JpsipK_2011_2012_signal_cut.root";//change
+    TStopwatch sw;
+    sw.Start();
+    
+    const std::string filename = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/Lb2JpsipK_MC_2011_2012_norm_cut.root";//change
     
     const std::string treename("DecayTree");
 
     const std::string cuts = "";
 
-    const std::string outFilename("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/reduced_Lb2JpsipK_2011_2012_signal.root");//change
+    const std::string outFilename("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/reduced_Lb2JpsipK_MC)2011_2012_norm.root");//change
   
 
     TFile* file = TFile::Open( filename.c_str() );
@@ -103,11 +106,11 @@ void newReduceTree_norm(){
     tree->SetBranchStatus("Lambda_b0_Hlt2DiMuonDetachedHeavyDecision_TOS",1);
     tree->SetBranchStatus("Lambda_b0_PT",1);
     
-     /*
+     
     //for MC only                                                                   //
     tree->SetBranchStatus("Jpsi_BKGCAT",1);                                         //
     tree->SetBranchStatus("Lambda_b0_BKGCAT",1);                                    //
-  */
+  
    
     
     // -- this file is just here to make the 'CopyTree' happy
@@ -204,12 +207,12 @@ void newReduceTree_norm(){
     rTree1->SetBranchAddress("Lambda_b0_Hlt2DiMuonDetachedHeavyDecision_TOS", &Lambda_b0_Hlt2DiMuonDetachedHeavyDecision_TOS);
     rTree1->SetBranchAddress("Lambda_b0_PT", &Lambda_b0_PT);
 
-    /*
+    
     //for MC only                                                                   //
     int Jpsi_BKGCAT, Lambda_b0_BKGCAT;                                              //
     rTree1->SetBranchAddress("Jpsi_BKGCAT", &Jpsi_BKGCAT);                          //
     rTree1->SetBranchAddress("Lambda_b0_BKGCAT", &Lambda_b0_BKGCAT);                //
-    */
+    
     
     TFile* rFile = new TFile( outFilename.c_str() ,"RECREATE");
     TTree* rTree2 = new TTree();
@@ -287,11 +290,11 @@ void newReduceTree_norm(){
     rTree2->Branch("Lambda_b0_Hlt2DiMuonDetachedHeavyDecision_TOS", &Lambda_b0_Hlt2DiMuonDetachedHeavyDecision_TOS, "Lambda_b0_Hlt2DiMuonDetachedHeavyDecision_TOS/B");
     rTree2->Branch("Lambda_b0_PT", &Lambda_b0_PT, "Lambda_b0_PT/D");
                             
-               /*                                   
+                                                 
     //for MC only                                                                   //
     rTree2->Branch("Jpsi_BKGCAT", &Jpsi_BKGCAT, "Jpsi_BKGCAT/I");                   //
     rTree2->Branch("Lambda_b0_BKGCAT", &Lambda_b0_BKGCAT, "Lambda_b0_BKGCAT/I");    //
-    */
+    
     
 //-----------------------------------------------------------------------------------    
 
@@ -313,7 +316,9 @@ void newReduceTree_norm(){
     rTree2->Print();
     rTree2->Write();
     rFile->Save();
-
+    
+    sw.Stop();
+    sw.Print();
 }
 
 

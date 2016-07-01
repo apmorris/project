@@ -42,7 +42,7 @@ void BDT_cuts_norm(){
     
     
     // -- signal, mass shape
-    RooRealVar Lambda_b0_DTF_MASS_constr1("Lambda_b0_DTF_MASS_constr1","m(#chi_{c}pK^{-})", 5550., 5700., "MeV/c^{2}"); 
+    RooRealVar Lambda_b0_DTF_MASS_constr1("Lambda_b0_DTF_MASS_constr1","m(J/#psi pK^{-})", 5550., 5700., "MeV/c^{2}"); 
     RooRealVar Jpsi_M("Jpsi_M","m(#mu#mu)", 3000., 3200., "MeV/c^{2}"); 
     RooRealVar chi_c_M("chi_c_M","m(J/#psi#gamma)", 3400., 3700., "MeV/c^{2}"); 
     RooRealVar mean("mean","mean", 5630., 5610., 5650.);
@@ -225,9 +225,9 @@ void BDT_cuts_norm(){
     TGraphErrors* graph = new TGraphErrors(40, bdt_cuts, efficiencies1, 0, efficiencies1_error);
     
     graph->SetTitle("S/sqrt(S+B) vs BDTG3 cut");
-    graph->SetMarkerColor(4);
-    graph->SetMarkerStyle(20);
-    graph->SetMarkerSize(1.0);
+    //graph->SetMarkerColor(4);
+    //graph->SetMarkerStyle(20);
+    //graph->SetMarkerSize(1.0);
     graph->GetXaxis()->SetTitle("BDTG3 cut (>)");
     graph->GetXaxis()->SetRangeUser(-1.0,1.0);
     graph->GetYaxis()->SetTitle("S/sqrt(S+B)");

@@ -8,7 +8,7 @@
 */
 #include "RooStudentT.h"
                                                                                     //
-void fit_MC(std::string input_file = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/reduced_Lb2chicpK_MC_2011_2012_signal.root", std::string out_file_mass = "~/cern/plots/fitting/Lb2chicpK_MC_2011_2012_cut_mass_fit.pdf"){
+void fit_MC(std::string input_file = "/afs/cern.ch/work/a/apmorris/public/Lb2chicpK/signal_samples/reduced_Lb2chicpK_MC_2011_2012_signal.root", std::string out_file_mass = "~/cern/plots/fitting/Lb2chicpK_MC_2011_2012_cut_mass_fit.pdf"){
                                                                                     //
     gROOT->ProcessLine(".L ~/cern/project/lhcbStyle.C");
     //gROOT->ProcessLine(".L RooStudentT.cxx++");
@@ -25,7 +25,7 @@ void fit_MC(std::string input_file = "/afs/cern.ch/work/a/apmorris/private/cern/
 
 
     // -- signal, mass shape
-    RooRealVar Lambda_b0_DTF_MASS_constr1("Lambda_b0_DTF_MASS_constr1","m(#chi_{c1}pK^{-})", 5550., 5700., "MeV/c^{2}"); 
+    RooRealVar Lambda_b0_DTF_MASS_constr1("Lambda_b0_DTF_MASS_constr1","m(#chi_{c1}pK^{-})", 5500., 5700., "MeV/c^{2}"); 
     RooRealVar Jpsi_M("Jpsi_M","m(#mu#mu)", 3000., 3200., "MeV/c^{2}"); 
     RooRealVar chi_c_M("chi_c_M","m(J/#psi#gamma)", 3350., 3750., "MeV/c^{2}"); 
     RooRealVar mean("mean","mean", 5620., 5595., 5650.);
@@ -38,13 +38,13 @@ void fit_MC(std::string input_file = "/afs/cern.ch/work/a/apmorris/private/cern/
     RooRealVar nu("nu", "nu", 2., 0.7, 100.);
     //RooRealVar bkgcat_chic("bkgcat_chic","bkgcat_chic", 0, 100);
 
-    Lambda_b0_DTF_MASS_constr1.setBins(75);
+    Lambda_b0_DTF_MASS_constr1.setBins(100);
 
     RooGaussian gauss1("gauss1","gauss1", Lambda_b0_DTF_MASS_constr1, mean, sigma1);
     RooGaussian gauss2("gauss2","gauss2", Lambda_b0_DTF_MASS_constr1, mean, sigma2);
     RooCBShape cb1("cb1","cb1", Lambda_b0_DTF_MASS_constr1, mean, sigma1, alpha1, n1); 
     RooCBShape cb2("cb2","cb2", Lambda_b0_DTF_MASS_constr1, mean, sigma2, alpha2, n2); 
-    RooStudentT * student = new RooStudentT("student", "student", Lambda_b0_DTF_MASS_constr1, mean, sigma2, nu); 
+    //RooStudentT * student = new RooStudentT("student", "student", Lambda_b0_DTF_MASS_constr1, mean, sigma2, nu); 
     
     
     // the chi_c2 component
@@ -89,11 +89,11 @@ void fit_MC(std::string input_file = "/afs/cern.ch/work/a/apmorris/private/cern/
     plot->SetAxisRange(5500., 5750.);
 
     //pdf.fitTo( ds );
-    student.fitTo( ds );
+    pdf.fitTo( ds );
 
     ds.plotOn( plot );
     //pdf.plotOn( plot );
-    student->plotOn( plot );
+    pdf.plotOn( plot );
     //gauss3.plotOn( plot );
 
 
@@ -107,13 +107,13 @@ void fit_MC(std::string input_file = "/afs/cern.ch/work/a/apmorris/private/cern/
     TCanvas* c = new TCanvas();
     c->cd();
 
-    TPad* pad1 = new TPad("pad1","pad1", 0, 0.18, 1, 1.0);
+    TPad* pad1 = new TPad("pad1","pad1", 0, 0.3, 1, 0.95);
     //pad1->SetBottomMargin(0.1);
     //pad1->SetTopMargin(0.1);
     pad1->Draw();
     
     //TPad* pad2 = new TPad("pad2","pad2", 0, 0.05, 1, 0.4);
-    TPad* pad2 = new TPad("pad2","pad2", 0, 0, 1, 0.3);
+    TPad* pad2 = new TPad("pad2","pad2", 0, 0.05, 1, 0.3);
      pad2->Draw();
      plotPullMass->GetXaxis()->SetLabelSize(0.1);
     plotPullMass->GetYaxis()->SetLabelSize(0.1);
@@ -123,8 +123,8 @@ void fit_MC(std::string input_file = "/afs/cern.ch/work/a/apmorris/private/cern/
     //pad2->SetTopMargin(0.0);
    
 
-    //pdf.plotOn( plot, RooFit::Components( cb1 ), RooFit::LineColor( kRed ), RooFit::LineStyle(kDashed) );
-    //pdf.plotOn( plot, RooFit::Components( cb2 ), RooFit::LineColor( kOrange ), RooFit::LineStyle(kDotted) );
+    pdf.plotOn( plot, RooFit::Components( cb1 ), RooFit::LineColor( kRed ), RooFit::LineStyle(kDashed) );
+    pdf.plotOn( plot, RooFit::Components( cb2 ), RooFit::LineColor( kOrange ), RooFit::LineStyle(kDotted) );
     //pdf.plotOn( plot, RooFit::Components( bgPdf ), RooFit::LineColor( kBlue ), RooFit::LineStyle(kDashDotted) );
 
     pad1->cd();

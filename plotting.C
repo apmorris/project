@@ -26,29 +26,26 @@
     const std::string filename1 = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/reduced_Lb2chicpK_2011_2012_signal_weighted.root";
     const std::string treename1 = "ds";
     
-    const std::string filename2 = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/reduced_Lb2chicpK_MC_2011_2012_signal.root";
-    const std::string treename2 = "DecayTree";
+    const std::string filename2 = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/signal_samples/Lb2chicpK_MC_2011_2012_signal.root";
+    const std::string treename2 = "Tuple/DecayTree";
 
-    const std::string xaxis    = "log(proton_IPCHI2_OWNPV)";
-    const std::string yaxis     = "Events";
+    const std::string xaxis    = "muminus_ProbNNmu";
+    const std::string yaxis     = "Events / 0.025";
     //const std::string yaxis     = "sWeight";
     
     
-    const std::string title     = "";
-    const std::string varhisto1 = "log(proton_IPCHI2_OWNPV)>>h1";
-    const std::string varhisto2 = "log(proton_IPCHI2_OWNPV)>>h2";
+    const std::string title     = "sWeighted data compared with simulation";
+    const std::string varhisto1 = "muminus_ProbNNmu>>h1";
+    const std::string varhisto2 = "muminus_ProbNNmu>>h2";
 
-    const std::string outfile =   "/afs/cern.ch/user/a/apmorris/cern/plots/var_comparisons/log_proton_IPCHI2_OWNPV_before_bdt.pdf";  
+    const std::string outfile =   "/afs/cern.ch/user/a/apmorris/cern/plots/sWeights_MC_comparison/muminus_ProbNNmu_data_and_MC.pdf";  
   
-    int bins = 16;
-    float rangemin = 1.;
-    float rangemax = 9.;
+    int bins = 40;
+    float rangemin = 0.;
+    float rangemax = 1.;
 /*
     //inbdt
-    obs.add(kaon_TRACK_GhostProb);
-    obs.add(proton_TRACK_GhostProb);
-    obs.add(muminus_TRACK_GhostProb);
-    obs.add(muplus_TRACK_GhostProb);
+    all pT's
     
     obs.add(Lambda_b0_DTF_CHI2NDOF);
     obs.add(Lambda_b0_IPCHI2_OWNPV);
@@ -57,11 +54,11 @@
     obs.add(kaon_PT);//rebin
     obs.add(kaon_IPCHI2_OWNPV);
     obs.add(proton_PT);//rebin
-    obs.add(proton_IPCHI2_OWNPV);
+    >>obs.add(proton_IPCHI2_OWNPV);
     obs.add(gamma_CL);
     obs.add(gamma_PT);
-    obs.add(muplus_ProbNNmu);
-    obs.add(muminus_ProbNNmu);
+    >>obs.add(muplus_ProbNNmu);
+    >>obs.add(muminus_ProbNNmu);
 
     //only in preselection
     obs.add(chi_c_M);
@@ -102,9 +99,9 @@
     gStyle->SetOptStat(0);	
 
 
-    titleBox = new TPaveText(gStyle->GetPadLeftMargin() + 0.05,
+    titleBox = new TPaveText(gStyle->GetPadLeftMargin() + 0.3,
             0.98 - gStyle->GetPadTopMargin(),
-            gStyle->GetPadLeftMargin() + 0.4,
+            0.98 - gStyle->GetPadLeftMargin(),
             0.83 - gStyle->GetPadTopMargin(),
             "BRNDC");
     titleBox->AddText(title.c_str());
@@ -112,6 +109,8 @@
     titleBox->SetTextAlign(12);
     titleBox->SetBorderSize(0);
 
+    
+    
 
     // plotting ------------------------------------------------------------------- 
 
@@ -121,7 +120,9 @@
     
     
     // Differentiating the MC histo from the data histo
-    h1->Sumw2(); 	//with this get markers, without get a line
+    h1->Sumw2(); 	
+    h1->SetMarkerStyle(kFullDotLarge);
+    h1->SetMarkerSize(0.7);
     h2->SetMarkerColor(kRed);
     h2->SetLineColor(kRed);
 
@@ -150,7 +151,13 @@
     h1->GetXaxis()->SetTitle( xaxis.c_str() );	
     h1->GetYaxis()->SetTitle( yaxis.c_str() );
     //lhcbName->Draw();	
-    //titleBox->Draw();	
+    //titleBox->Draw();
+    
+    leg = new TLegend(0.2,0.8,0.5,0.9);
+    //leg->SetHeader("The Legend Title");
+    leg->AddEntry(h1,"sWeighted data","ep");
+    leg->AddEntry(h2,"simulated data","l");
+    leg->Draw();	
     
     //int Nhisto1 = t1->GetEntries("");
     c1->SaveAs( outfile.c_str() );   

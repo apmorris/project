@@ -21,7 +21,7 @@
 #include "TObjString.h"
 #include "TSystem.h"
 #include "TROOT.h"
-
+#include "TStopwatch.h"
 //#include "TMVAGui.C"
 
 #if not defined(__CINT__) || defined(__MAKECINT__)
@@ -120,23 +120,23 @@ void ZTMVAClassification_norm( TString myMethodList = "" ) {
     
     factory->AddVariable("log(kaon_IPCHI2_OWNPV)", "log(kaon_IPCHI2_OWNPV)", "", 'D');
     
-    factory->AddVariable("kaon_TRACK_GhostProb", "kaon_TRACK_GhostProb", "", 'D');
+    //factory->AddVariable("kaon_TRACK_GhostProb", "kaon_TRACK_GhostProb", "", 'D');
     
     factory->AddVariable("kaon_PT", "kaon_PT", "", 'D');
 
     factory->AddVariable("log(proton_IPCHI2_OWNPV)", "log(proton_IPCHI2_OWNPV)", "", 'D');
     
-    factory->AddVariable("proton_TRACK_GhostProb", "proton_TRACK_GhostProb", "", 'D');
+    //factory->AddVariable("proton_TRACK_GhostProb", "proton_TRACK_GhostProb", "", 'D');
     
     factory->AddVariable("proton_PT", "proton_PT", "", 'D');
   
     factory->AddVariable("muminus_ProbNNmu", "muminus_ProbNNmu", "", 'D');  
     
-    factory->AddVariable("muminus_TRACK_GhostProb", "muminus_TRACK_GhostProb", "", 'D');  
+    //factory->AddVariable("muminus_TRACK_GhostProb", "muminus_TRACK_GhostProb", "", 'D');  
 
     factory->AddVariable("muplus_ProbNNmu", "muplus_ProbNNmu", "", 'D');  
     
-    factory->AddVariable("muplus_TRACK_GhostProb", "muplus_TRACK_GhostProb", "", 'D');  
+    //factory->AddVariable("muplus_TRACK_GhostProb", "muplus_TRACK_GhostProb", "", 'D');  
 
     factory->AddVariable("Lambda_b0_DTF_CHI2NDOF", "Lambda_b0_DTF_CHI2NDOF", "", 'D');
     

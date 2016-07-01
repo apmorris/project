@@ -3,12 +3,12 @@ void selectBackground(){
     // -- define tuple file name, tuple name and cuts to apply
     // -- and also the name of the output file
     
-    const std::string filename = "/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/reduced_Lb2JpsipK_2011_2012_signal.root";
-    const std::string outFilename("/afs/cern.ch/work/a/apmorris/private/cern/ntuples/new_tuples/normalisation_samples/background.root");
+    const std::string filename = "/afs/cern.ch/work/a/apmorris/public/Lb2chicpK/signal_samples/Lb2chicpK_2011_2012_signal.root";
+    const std::string outFilename("/afs/cern.ch/work/a/apmorris/public/Lb2chicpK/signal_samples/background.root");
         
-    const std::string treename("DecayTree");
+    const std::string treename("Tuple/DecayTree");
  
-    const std::string cuts = "Lambda_b0_DTF_MASS_constr1>5650";
+    const std::string cuts = "Lambda_b0_DTF_MASS_constr1 > 5700. && Lambda_b0_DTF_MASS_constr1 < 5800.";
     
 // Copy the tree --------------------------------------------------------------------
     
