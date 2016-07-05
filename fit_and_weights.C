@@ -30,7 +30,7 @@ void fit_and_weights(){
     const std::string treename = "withbdt";                                         
     const std::string out_file_mass("~/cern/new_plots/Lb2chicpK_2011_2012_mass_fit_after_bdt_cut_085.pdf");                                   
                                          
-    const std::string cuts("bdtg >= 0.85");                                         
+    const std::string cuts("bdtg >= 0.85 && gamma_PT > 500.");                                         
     //const std::string cuts("(Lambda_b0_DTF_MASS_proton_as_kaon >5387. || Lambda_b0_DTF_MASS_proton_as_kaon <5347.) && (Lambda_b0_DTF_MASS_proton_as_pion >5300. || Lambda_b0_DTF_MASS_proton_as_pion <5260.) && bdtg >= 0.7");
 
 
