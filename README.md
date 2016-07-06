@@ -6,7 +6,7 @@
 Applies preselection to all data sets - the comments indicate which string of cuts to use for which data set.
 
 ##### 2. newReduceTree.C / newReduceTree_norm.C
-Reduces the number of branches to make the ntuples more manageable. (I need to check that I keep all the necessary branches here, and also add loop to make new branches which are combinations of particles eg. chi_c + proton, and mis-id'd particles - this will make it easier to look at these later on rather than having lots of individual scripts.)
+Reduces the number of branches to make the ntuples more manageable. Also adds new branches which are combinations of particles eg. chi_c + proton, and mis-id'd particles.
 
 ##### 3. fit_MC.C / fit_MC_norm.C 
 Applies a fit to the simulated data sample after the preselection has been applied to it. The fit parameters from this go into the fit_and_weights script.
@@ -36,16 +36,16 @@ Performs a fit to the chicpK/JpsipK mass distribution using the chosen ntuple an
 Includes some code to calculate efficiencies.
 
 ##### PID_misidentification.C
-Made new branches containing chicpK invariant masses assuming misidentified protons.
+Not used currently.
 
 ##### mass_additions.C
-Made new branches with mass combinations such as chic+proton and proton+kaon.
+Not used currently.
 
 ##### fit_chi_c2.C
 Haven't used this yet. Will be for fitting the _constr2 chicpK mass.
 
 ##### no_photon.C
-Plots mass(Jpsi+proton+kaon).
+Not used currently.
 
 ##### plotting.C
 General plotting script.
